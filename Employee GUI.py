@@ -14,18 +14,18 @@ class employess:  # Creating a class for the employee
         self.DOB = DOB
         self.passportdetaisl = passportdetaisl
         self.manager_id = manager_id
-    def save(self):
+    def save(self):  #saving the class to a file
         with open(f'employee_{self.ID}.pkl','wb') as output:
             pickle.dump(self,output,pickle.HIGHEST_PROTOCOL)
 
-    def load(ID):
+    def load(ID):  # loading and returning object from the file
         try:
             with open(f'employee_{ID}.pkl','rb') as input:
                 return pickle.load(input)
         except FileNotFoundError:
             return None
 
-    def delete(self):
+    def delete(self): #deleteing the file that has the pickle
         os.remove(f'employee_{self.ID}.pkl')
 
 class emoplyeeGUI: #starting the gui for emplyee manmgemnt
@@ -33,6 +33,7 @@ class emoplyeeGUI: #starting the gui for emplyee manmgemnt
         self.master = master
         master.title("Platform for employee management")
 
+        # adding all the lables and boxes for the client attributes
         tk.Label(master,text="emplyee ID:").grid(row=0)
         self.emplyeeid_entry=tk.Entry(master)
         self.emplyeeid_entry.grid(row=0,column=1)
@@ -69,6 +70,8 @@ class emoplyeeGUI: #starting the gui for emplyee manmgemnt
         self.emplyeemanagerid_entry = tk.Entry(master)
         self.emplyeemanagerid_entry.grid(row=8, column=1)
 
+        # adding the buttons
+
         self.add=tk.Button(master,text="add employee details",command=self.addemployeedetails)
         self.add.grid(row=9,column=0)
 
@@ -81,7 +84,7 @@ class emoplyeeGUI: #starting the gui for emplyee manmgemnt
         self.display = tk.Button(master, text="display employee details", command=self.displayemployeedetails)
         self.display.grid(row=10, column=1)
 
-    def addemployeedetails(self):
+    def addemployeedetails(self): #This define function is for colleting input from the user and savinf it all
         employees_id =self.emplyeeid_entry.get()
         name=self.emplyeename_entry.get()
         department=self.emplyeedepartment_entry.get()
@@ -97,7 +100,7 @@ class emoplyeeGUI: #starting the gui for emplyee manmgemnt
         else:
             messagebox.showerror("error","answer all the boxes")
 
-    def modiefyemployeedetails(self):
+    def modiefyemployeedetails(self): #This define function is for modifying input from the user
         employees_id = self.emplyeeid_entry.get()
         employee=employess.load(employees_id)
         if employee:
@@ -114,7 +117,7 @@ class emoplyeeGUI: #starting the gui for emplyee manmgemnt
         else:
             messagebox.showerror("error", "we cannot find employee")
 
-    def deleteemployeedetails(self):
+    def deleteemployeedetails(self): #This define function is for deleteing input from the user
         employees_id = self.emplyeeid_entry.get()
         employee = employess.load(employees_id)
         if employee:
@@ -123,7 +126,7 @@ class emoplyeeGUI: #starting the gui for emplyee manmgemnt
         else:
             messagebox.showerror("error", "we cannot find employee")
 
-    def displayemployeedetails(self):
+    def displayemployeedetails(self): #This define function is for displaying input from the user
         employees_id = self.emplyeeid_entry.get()
         employee = employess.load(employees_id)
         if employee:

@@ -11,25 +11,25 @@ class supplier :  #creating a class for the supplier
         self.contact_details=contact_details
         self.service_provided=service_provided
 
-    def save(self):
+    def save(self): #saving the class to a file
         with open(f'supplier_{self.supplier_id_}.pkl','wb')as output:
             pickle.dump(self, output, pickle.HIGHEST_PROTOCOL)
 
-    def load(supplier_id_):
+    def load(supplier_id_): # loading and returning a client object from the file
         try:
             with open(f'supplier_{supplier_id_}.pkl', 'rb') as input:
                 return pickle.load(input)
         except FileNotFoundError:
             return None
 
-    def delet(self):
+    def delet(self): #deleteing the file that has the pickle
         os.remove(f'supplier_{self.supplier_id_}.pkl')
 
-class supplierGUI:
+class supplierGUI: #starting the gui for all the system requirments
     def __init__(self,master):
         self.master=master
         master.title("Platform for supplier management")
-
+        # adding all the lables and boxes for the supplier attributes
         tk.Label(master,text="Suppliers ID").grid(row=0)
         self.supplier_id__entry=tk.Entry(master)
         self.supplier_id__entry.grid(row=0,column=1)
@@ -49,6 +49,7 @@ class supplierGUI:
         tk.Label(master, text="Suppliers serivace provided").grid(row=4)
         self.supplierservice_entry = tk.Entry(master)
         self.supplierservice_entry.grid(row=4, column=1)
+        #adding the buttons
 
         self.add=tk.Button(master,text="add supplier details",command=self.addsuppliersdetails)
         self.add.grid(row=5,column=0)
@@ -62,7 +63,7 @@ class supplierGUI:
         self.dis = tk.Button(master, text="display supplier details", command=self.displaysuppliersdetails)
         self.dis.grid(row=6, column=1)
 
-    def addsuppliersdetails(self):
+    def addsuppliersdetails(self): #This define function is for colleting input from the user and saving it all
         supplier_id_=self.supplier_id__entry.get()
         name=self.suppliername_entry.get()
         address=self.supplieraddress_entry.get()
@@ -74,7 +75,7 @@ class supplierGUI:
         else:
             messagebox.showerror("error","we cannot find the supplier")
 
-    def modifysuppliersdetails(self):
+    def modifysuppliersdetails(self): #This define function is for modifying input from the user
         supplier_id_ = self.supplier_id__entry.get()
         supplier1=supplier.load(supplier_id_)
         if supplier1:
@@ -87,7 +88,7 @@ class supplierGUI:
         else:
             messagebox.showerror("error", "we cannot find the supplier")
 
-    def deletesuppliersdetails(self):
+    def deletesuppliersdetails(self): #This define function is for deleteing input from the user
         supplier_id_ = self.supplier_id__entry.get()
         supplier1 = supplier.load(supplier_id_)
         if supplier1:
@@ -97,7 +98,7 @@ class supplierGUI:
             messagebox.showerror("error", "we cannot find the supplier")
 
 
-    def displaysuppliersdetails(self):
+    def displaysuppliersdetails(self): #This define function is for displaying input from the user
         supplier_id_ = self.supplier_id__entry.get()
         supplier1 = supplier.load(supplier_id_)
         if supplier1:

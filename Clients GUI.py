@@ -11,17 +11,17 @@ class client1 : #creating a class for the client
         self.contact_details=contact_details
         self.budget=budget
 
-    def save(self):
+    def save(self): #saving the class to a file
         with open(f'client_{self.client_id}.pkl','wb') as output :
             pickle.dump(self,output,pickle.HIGHEST_PROTOCOL)
 
-    def load(client_id):
+    def load(client_id): # loading and returning a client object from the file
         try:
             with open(f'client_{client_id}.pkl','rb') as input:
                 return pickle.load(input)
         except FileNotFoundError :
             return None
-    def delet(self):
+    def delet(self):#deleteing the file that has the pickle
         os.remove(f'client_{self.client_id}.pkl')
 
 class Clientsystem: #starting the gui for all the system requirments
@@ -64,7 +64,7 @@ class Clientsystem: #starting the gui for all the system requirments
         self.display = tk.Button(master, text="display clients details", command=self.displayclinetsdetails)
         self.display.grid(row=6, column=1)
 
-    def addclientdetails(self):
+    def addclientdetails(self): #This define function is for colleting input from the user and savinf it all
         client_id=self.client_id_entry.get()
         name=self.client_name_entry.get()
         address =self.client_adress_entry.get()
@@ -77,7 +77,7 @@ class Clientsystem: #starting the gui for all the system requirments
             messagebox.showerror("error","you need to fill out all the boxes")
 
 
-    def modifyclinetsdetails(self):
+    def modifyclinetsdetails(self): #This define function is for modifying input from the user
         client_id=self.client_id_entry.get()
         client= client1.load(client_id)
         if client:
@@ -90,7 +90,7 @@ class Clientsystem: #starting the gui for all the system requirments
             messagebox.showerror("error","we cannot find that client")
 
 
-    def deleteclinetsdetails(self):
+    def deleteclinetsdetails(self): #This define function is for deleteing input from the user
         client_id = self.client_id_entry.get()
         client =client1.load(client_id)
         if client:
@@ -99,7 +99,7 @@ class Clientsystem: #starting the gui for all the system requirments
         else:
             messagebox.showerror("error","we cannot find that client")
 
-    def displayclinetsdetails(self):
+    def displayclinetsdetails(self): #This define function is for displaying input from the user
         client_id = self.client_id_entry.get()
         client = client1.load(client_id)
         if client:

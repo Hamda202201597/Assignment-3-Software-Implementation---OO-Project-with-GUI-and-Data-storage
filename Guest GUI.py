@@ -10,18 +10,18 @@ class guest1 :#creating class guest
         self.address=address
         self.contact_details=contact_details
 
-    def save(self):
+    def save(self): #saving the class to a file
         with open(f'guest_{self.guest_id}.pkl','wb')as output:
             pickle.dump(self, output, pickle.HIGHEST_PROTOCOL)
 
-    def load(guest_id):
+    def load(guest_id): # loading and returning a client object from the file
         try:
             with open(f'guest_{guest_id}.pkl', 'rb') as input:
                 return pickle.load(input)
         except FileNotFoundError:
             return None
 
-    def delet(self):
+    def delet(self): #deleteing the file that has the pickle
         os.remove(f'guest_{self.guest_id}.pkl')
 
 class guestmanagmentgui: #starting the gui for all the system requirments
@@ -29,7 +29,7 @@ class guestmanagmentgui: #starting the gui for all the system requirments
         self.master = master
         master.title("Platform for guest management")
 
-    # adding all the lables and boxes for the client attributes
+    # adding all the lables and boxes for the guest attributes
         tk.Label(master, text="Guests id:").grid(row=0)
         self.guest_id_entry=tk.Entry(master)
         self.guest_id_entry.grid(row=0,column=1)
@@ -60,7 +60,7 @@ class guestmanagmentgui: #starting the gui for all the system requirments
         self.displayguestdetails_button.grid(row=5, column=1)
 
 
-    def add_gusetdetails(self):
+    def add_gusetdetails(self): #This define function is for colleting input from the user and saving it all
         guest_id=self.guest_id_entry.get()
         name=self.name_entry.get()
         address=self.address_entry.get()
@@ -71,7 +71,7 @@ class guestmanagmentgui: #starting the gui for all the system requirments
         else:
             messagebox.showerror("error","missing information")
 
-    def modify_guestsdetails(self):
+    def modify_guestsdetails(self): #This define function is for modifying input from the user
         guest_id=self.guest_id_entry.get()
         guest=guest1.load(guest_id)
         if guest:
@@ -83,7 +83,7 @@ class guestmanagmentgui: #starting the gui for all the system requirments
         else:
             messagebox.showerror("error","we cannot find guest info")
 
-    def delete_guestsdetails(self):
+    def delete_guestsdetails(self): #This define function is for deleteing input from the user
         guest_id=self.guest_id_entry.get()
         guest=guest1.load(guest_id)
         if guest:
@@ -93,7 +93,7 @@ class guestmanagmentgui: #starting the gui for all the system requirments
             messagebox.showerror("error", "we cannot find guest info")
 
 
-    def display_guestsdetails(self):
+    def display_guestsdetails(self): #This define function is for displaying input from the user
         guest_id = self.guest_id_entry.get()
         guest = guest1.load(guest_id)
         if guest:

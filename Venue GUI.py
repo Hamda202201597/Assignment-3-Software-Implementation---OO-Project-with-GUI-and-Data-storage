@@ -11,22 +11,22 @@ class venue : #creating a class venue
         self.min_guests=min_guests
         self.max_guest=max_guest
 
-    def save(self):
+    def save(self): #saving the class to a file
         with open(f'venue_{self.venues_id}.pkl', 'wb') as output:
             pickle.dump(self, output, pickle.HIGHEST_PROTOCOL)
 
-    def load(venues_id):
+    def load(venues_id): # loading and returning a client object from the file
         try:
             with open(f'venue_{venues_id}.pkl', 'rb') as input:
                 return pickle.load(input)
         except FileNotFoundError:
             return None
 
-class VenueGUI:
+class VenueGUI: #starting the gui for all the system requirments
     def __init__(self,master):
         self.master=master
         master.title("Platform for venue management")
-
+        # adding all the lables and boxes for the venue attributes
         tk.Label(master,text="venues id").grid(row=0)
         self.venues_id_entry=tk.Entry(master)
         self.venues_id_entry.grid(row=0,column=1)
@@ -50,6 +50,7 @@ class VenueGUI:
         tk.Label(master, text="venues max guests").grid(row=5)
         self.venues_max_entry = tk.Entry(master)
         self.venues_max_entry.grid(row=5, column=1)
+        #adding the buttons
 
         self.add=tk.Button(master,text="add venue details",command=self.addvenuedetails)
         self.add.grid(row=6,column=0)
@@ -57,7 +58,7 @@ class VenueGUI:
         self.display = tk.Button(master, text="display venue details", command=self.displayvenuedetails)
         self.display.grid(row=6, column=1)
 
-    def addvenuedetails(self):
+    def addvenuedetails(self): #This define function is for colleting input from the user and saving it all
         venues_id=self.venues_id_entry.get()
         name=self.venues_name_entry.get()
         address=self.venues_address_entry.get()
@@ -70,7 +71,7 @@ class VenueGUI:
         else:
             messagebox.showerror("error","answer all the boxes")
 
-    def displayvenuedetails(self):
+    def displayvenuedetails(self): #This define function is for displaying input from the user
         venues_id = self.venues_id_entry.get()
         venue1=venue.load(venues_id)
         if venue1:
